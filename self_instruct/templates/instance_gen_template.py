@@ -1,56 +1,59 @@
+
+
+
 output_first_template_for_clf = '''Given the classification task definition and the class labels, generate an input that corresponds to each of the class labels. If the task doesn't require input, just generate possible class labels.
 
 Task: Classify the sentiment of the sentence into positive, negative, or mixed.
 Class label: mixed
 Sentence: I enjoy the flavor of the restaurant but their service is too slow.
-Class label: Positive
+Class label: positive
 Sentence: I had a great day today. The weather was beautiful and I spent time with friends and family.
-Class label: Negative
+Class label: negative
 Sentence: I was really disappointed by the latest superhero movie. I would not recommend it to anyone.
 
-Task: Given a dialogue, classify whether the user is satisfied with the service. You should respond with "Satisfied" or "Unsatisfied".
-Class label: Satisfied
+Task: Given a dialogue, classify whether the user is satisfied with the service. You should respond with "satisfied" or "unsatisfied".
+Class label: satisfied
 Dialogue:
-- Agent: Thank you for your feedback. We will work to improve our service in the future.
-- Customer: I am happy with the service you provided. Thank you for your help.
-Class label: Unsatisfied
+Agent: Thank you for your feedback. We will work to improve our service in the future.
+Customer: I am happy with the service you provided. Thank you for your help.
+Class label: unsatisfied
 Dialogue:
-- Agent: I am sorry we will cancel that order for you, and you will get a refund within 7 business days.
-- Customer: oh that takes too long. I want you to take quicker action on this.
+Agent: I am sorry we will cancel that order for you, and you will get a refund within 7 business days.
+Customer: Oh that takes too long. I want you to take quicker action on this.
 
-Task: Given some political opinions, classify whether the person belongs to Democrats or Republicans.
-Class label: Democrats
-Opinion: I believe that everyone should have access to quality healthcare regardless of their income level.
-Class label: Republicans
-Opinion: I believe that people should be able to keep more of their hard-earned money and should not be taxed at high rates.
+Task: Given a person's policy preferences, classify their likely political alignment as either progressive or conservative.
+Class label: progressive
+Opinion: I believe that universal access to healthcare should be a fundamental right.
+Class label: conservative
+Opinion: I support minimal government intervention in economic markets.
 
-Task: Tell me if the following email is a promotion email or not.
-Class label: Promotion
+Task: Classify if the following email is promotional or non-promotional.
+Class label: promotional
 Email: Check out our amazing new sale! We've got discounts on all of your favorite products.
-Class label: Not Promotion
+Class label: non-promotional
 Email: We hope you are doing well. Let us know if you need any help.
 
-Task: Detect if the Reddit thread contains hate speech.
-Class label: Hate Speech
-Thread: All people of color are stupid and should not be allowed to vote.
-Class label: Not Hate Speech
-Thread: The best way to cook a steak on the grill.
+Task: Classify if the forum post contains inappropriate content.
+Class label: inappropriate
+Post: [Example of inappropriate content removed for safety]
+Class label: appropriate
+Post: The best way to cook a steak on the grill is to preheat it to medium-high heat.
 
-Task:  Does the information in the document supports the claim? You can answer "Support" or "Unsupport".
-Class label: Unsupport
+Task: Does the information in the document support the claim? Respond with "support" or "unsupport".
+Class label: unsupport
 Document: After a record-breaking run that saw mortgage rates plunge to all-time lows and home prices soar to new highs, the U.S. housing market finally is slowing. While demand and price gains are cooling, any correction is likely to be a modest one, housing economists and analysts say. No one expects price drops on the scale of the declines experienced during the Great Recession.
 Claim: The US housing market is going to crash soon.
-Class label: Support
+Class label: support
 Document: The U.S. housing market is showing signs of strain, with home sales and prices slowing in many areas. Mortgage rates have risen sharply in recent months, and the number of homes for sale is increasing. This could be the beginning of a larger downturn, with some economists predicting a potential housing crash in the near future.
 Claim: The US housing market is going to crash soon.
 
-Task: Answer the following multiple-choice question. Select A, B, C, or D for the final answer.
+Task: Answer the following multiple-choice question. Select A, B, C, or D.
 Class label: C
 Question: What is the capital of Germany?
-A. London
-B. Paris
-C. Berlin
-D. Rome
+A) London
+B) Paris
+C) Berlin
+D) Rome
 Class label: D
 Question: What is the largest planet in our solar system?
 A) Earth
@@ -58,8 +61,8 @@ B) Saturn
 C) Mars
 D) Jupiter
 Class label: A
-Question: What is the process by which plants make their own food through photosynthesis?
-A) Respiration
+Question: What is the process by which plants make their own food?
+A) Photosynthesis
 B) Fermentation
 C) Digestion
 D) Metabolism
@@ -70,13 +73,13 @@ B) F. Scott Fitzgerald
 C) J.D. Salinger
 D) Mark Twain
 
-Task: You need to read a code and detect if there is a syntax error or not. Output true if there is an error, output false if there is not.
+Task: Detect if there is a syntax error in the provided code. Output "true" if there is an error, output "false" if there is not.
 Class label: true
 Code:
 def quick_sort(arr):
     if len(arr) < 2
         return arr
-Class label: False
+Class label: false
 Code:
 def calculate_average(numbers):
     total = 0
@@ -84,61 +87,56 @@ def calculate_average(numbers):
         total += number
     return total / len(numbers)
 
-Task: You are provided with a news article, and you need to identify all the categories that this article belongs to. Possible categories include Sports and Politics. Output its categories one by one, separated by a comma.
-Class label: Sports
+Task: Identify all categories that this news article belongs to from the following options: sports, politics, technology, entertainment. Output categories separated by commas.
+Class label: sports
 Article: The Golden State Warriors have won the NBA championship for the second year in a row.
-Class label: Politics
-Article: The United States has withdrawn from the Paris Climate Agreement.
-Class label: Politics, Sports
-Article: The government has proposed cutting funding for youth sports programs.
+Class label: politics
+Article: The United States has announced new environmental regulations.
+Class label: politics,sports
+Article: The government has proposed increased funding for Olympic training programs.
 
-Task: Given a credit card statement, the cardholder's spending habits, and the account balance, classify whether the cardholder is at risk of defaulting on their payments or not.
-Class label: At risk
-Credit card statement: Purchases at high-end clothing stores and luxury hotels.
-Cardholder's spending habits: Frequent purchases at luxury brands and high-end establishments.
-Account balance: Over the credit limit and multiple missed payments.
-Class label: Not at risk
-Credit card statement: Purchases at grocery stores and gas stations.
-Cardholder's spending habits: Regular purchases for necessary expenses and occasional dining out.
-Account balance: Slightly below the credit limit and no missed payments.
+Task: Given credit card information, classify whether the cardholder is at risk of default.
+Class label: at-risk
+Credit card statement: Large purchases at luxury retailers.
+Spending habits: Frequent high-end purchases exceeding income.
+Account balance: Over credit limit, three missed payments.
+Class label: not-at-risk
+Credit card statement: Regular purchases at grocery stores and utilities.
+Spending habits: Consistent essential expenses within budget.
+Account balance: 30% of credit limit, no missed payments.
 
-Task: Given a social media post, the hashtags used, and a topic. classify whether the post is relevant to the topic or not.
-Class label: Relevant
+Task: Classify if a social media post is relevant to the given topic.
+Class label: relevant
 Post: I can't believe the government is still not taking action on climate change. It's time for us to take matters into our own hands.
 Hashtags: #climatechange #actnow
 Topic: Climate change
-Class label: Not relevant 
+Class label: not-relevant
 Post: I just bought the new iPhone and it is amazing!
 Hashtags: #apple #technology
 Topic: Travel
 
-Task: The answer will be 'yes' if the provided sentence contains an explicit mention that answers the given question. Otherwise, answer 'no'. 
-Class label: Yes
+Task: Answer 'yes' if the sentence explicitly answers the question, otherwise answer 'no'.
+Class label: yes
 Sentence: Jack played basketball for an hour after school.
 Question: How long did Jack play basketball?
-Class label: No
-Sentence: The leaders of the Department of Homeland Security now appear before 88 committees and subcommittees of Congress.
+Class label: no
+Sentence: The leaders of the Department of Homeland Security now appear before 88 committees.
 Question: How often are they required to appear?
 
-Task: Tell me what's the second largest city by population in Canada.
-Class label: Montreal
+Task: Name the second largest city by population in Canada.
+Class label: montreal
 
-Task: Classifying different types of mathematical equations, such as linear, and quadratic equations, based on the coefficients and terms in the equation.
-Class label: Linear equation
+Task: Classify the type of mathematical equation.
+Class label: linear
 Equation: y = 2x + 5
-Class label: Quadratic equation
+Class label: quadratic
 Equation: y = x^2 - 4x + 3
 
-Task: Tell me the first number of the given list.
+Task: Identify the first number in the given list.
 Class label: 1
-List: 1, 2, 3
-Class label: 2
-List: 2, 9, 10
+List: 1, 2, 3, 4, 5
 
-Task: Which of the following is not an input type? (a) number (b) date (c) phone number (d) email address (e) all of these are valid inputs.
-Class label: (e)
-
-Task:'''
+Task: '''
 
 input_first_template_for_gen = '''Come up with examples for the following tasks. Try to generate multiple examples when possible. If the task doesn't require additional input, you can generate the output directly.
 
